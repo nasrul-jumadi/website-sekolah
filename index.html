@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPT SMAN 1 Pangkajene dan Kepulauan</title>
+
+  <!-- Google Fonts & Font Custom: Clash Display & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --primary: #F54927;
+      --primary-hover: #d83a1c;
+      --primary-soft: rgba(245, 73, 39, 0.08);
+      --primary-glow: rgba(245, 73, 39, 0.25);
+      --bg-light: #F8FAFC;
+      --bg-white: #FFFFFF;
+      --card-border: rgba(226, 232, 240, 0.8);
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
+      --font-heading: 'Clash Display', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    .ambient-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.5;
+    }
+    .blob-1 {
+      top: -100px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(245, 73, 39, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+    }
+
+    /* Header & Navigation */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 10px 8%;
+      transition: var(--transition);
+      background-color: #FFFFFF;
+      border-bottom: 1px solid var(--card-border);
+      box-shadow: var(--shadow-sm);
+    }
+
+    header.scrolled {
+      padding: 8px 8%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-dark);
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .logo-img {
+      height: 38px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .logo:hover .logo-img {
+      transform: scale(1.05);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--primary);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Quick Visitor Counter in Nav */
+    .header-stats {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--primary);
+      border: 1px solid rgba(245, 73, 39, 0.2);
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .btn-contact {
+      background: var(--primary);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.82rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px var(--primary-glow);
+    }
+
+    .btn-contact:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-dark);
+      cursor: pointer;
+    }
+
+    /* Hero / Jumbotron Section */
+    .hero {
+      position: relative;
+      height: 88vh;
+      min-height: 620px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      overflow: hidden;
+      padding-top: 80px;
+      padding-bottom: 60px;
+      background-color: #000000;
+    }
+
+    .slider-container {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out, transform 1s ease-in-out;
+      transform: scale(1.02);
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 920px;
+      padding: 0 24px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 30px;
+      color: #FF7B54;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .hero-desc {
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      color: #FFFFFF;
+      margin-bottom: 0;
+      max-width: 780px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 600;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      background: rgba(15, 23, 42, 0.65);
+      padding: 16px 28px;
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      gap: 12px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      width: 30px;
+      border-radius: 10px;
+      background: var(--primary);
+    }
+
+    /* Section Visitor Stats Bar */
+    .stats-section {
+      max-width: 1300px;
+      margin: -40px auto 40px;
+      position: relative;
+      z-index: 10;
+      padding: 0 8%;
+    }
+
+    .stats-card-container {
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 20px 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-box {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .stat-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-info h4 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .stat-info p {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    /* Common Section Styles */
+    section {
+      padding: 60px 8%;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-subtitle {
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    /* Profil Section */
+    .profil-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .bright-card {
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 30px 24px;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .bright-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(245, 73, 39, 0.3);
+    }
+
+    .profil-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--primary-soft);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .profil-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+    }
+
+    .profil-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Berita Section */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .news-card {
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .news-img {
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .news-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .news-card:hover .news-img img {
+      transform: scale(1.08);
+    }
+
+    .news-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: #FFFFFF;
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .news-body {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .news-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .news-views {
+      background: var(--bg-light);
+      padding: 2px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .news-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .news-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+    }
+
+    .news-full-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease;
+      opacity: 0;
+      color: var(--text-dark);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .news-full-content.open {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 10px;
+      margin-bottom: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--card-border);
+    }
+
+    .news-btn-toggle {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 0;
+      margin-top: auto;
+      transition: var(--transition);
+    }
+
+    .news-btn-toggle:hover {
+      color: var(--primary-hover);
+    }
+
+    /* Slider Wrapper */
+    .slider-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .slider-viewport {
+      overflow: hidden;
+      width: 100%;
+      border-radius: 18px;
+    }
+
+    .slider-track {
+      display: flex;
+      gap: 20px;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+    }
+
+    .nav-arrow:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .nav-arrow.prev { left: -20px; }
+    .nav-arrow.next { right: -20px; }
+
+    /* Guru Section */
+    .guru-card {
+      min-width: 240px;
+      max-width: 240px;
+      text-align: center;
+      padding: 24px 16px;
+      flex-shrink: 0;
+    }
+
+    .guru-img-wrapper {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      padding: 3px;
+      background: linear-gradient(135deg, var(--primary), #FF7B54);
+    }
+
+    .guru-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #E2E8F0;
+    }
+
+    .guru-name {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .guru-role {
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    /* Alumni Section */
+    .alumni-badge-banner {
+      background: linear-gradient(135deg, #FFF1EF, #FFFFFF);
+      border: 1px solid rgba(245, 73, 39, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .alumni-card {
+      min-width: 200px;
+      max-width: 200px;
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .alumni-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+
+    .alumni-img {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 12px;
+      border: 3px solid var(--primary-soft);
+    }
+
+    .alumni-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+
+    .alumni-status {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .slider-counter {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Gallery Section Update & Filter Dropdown */
+    .gallery-filter-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .gallery-filter-wrapper label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+    }
+
+    .gallery-filter-select {
+      padding: 10px 16px;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      background: var(--bg-white);
+      color: var(--text-dark);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      outline: none;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .gallery-filter-select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    .gallery-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      background: #000;
+    }
+
+    .gallery-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .gallery-slide {
+      min-width: 100%;
+      position: relative;
+      height: 480px;
+      background: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .gallery-slide img,
+    .gallery-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-slide iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000;
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      inset-x: 0;
+      padding: 30px 24px 24px;
+      background: linear-gradient(0deg, rgba(15,23,42,0.95) 0%, transparent 100%);
+      color: #fff;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .gallery-caption h4 {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      margin-bottom: 4px;
+    }
+
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 16px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .gallery-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: none;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: var(--transition);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .gallery-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Unduhan Section */
+    .download-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 900px;
+      margin: 0 auto 14px;
+    }
+
+    .download-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      transition: var(--transition);
+    }
+
+    .download-item:hover {
+      border-color: rgba(245, 73, 39, 0.4);
+      transform: translateX(4px);
+    }
+
+    .download-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .download-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .download-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .download-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .btn-download {
+      background: var(--bg-light);
+      border: 1px solid var(--card-border);
+      color: var(--text-dark);
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-download:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* Footer Modern Layout */
+    footer {
+      background: #FFFFFF;
+      border-top: 1px solid var(--card-border);
+      padding: 60px 8% 28px;
+    }
+
+    .footer-content {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1.5fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand .logo-img {
+      height: 40px;
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      margin-top: 14px;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .footer-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      margin-bottom: 18px;
+      color: var(--text-dark);
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      transform: translateX(4px);
+    }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a.footer-contact-item:hover {
+      color: var(--primary);
+    }
+
+    .footer-contact-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--bg-light);
+      border: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--card-border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 75%;
+        max-width: 300px;
+        background: var(--bg-white);
+        flex-direction: column;
+        padding: 100px 40px;
+        transition: var(--transition);
+        border-left: 1px solid var(--card-border);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .mobile-toggle {
+        display: block;
+        z-index: 1001;
+      }
+
+      .btn-contact {
+        display: none;
+      }
+
+      .stats-card-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-arrow.prev { left: -10px; }
+      .nav-arrow.next { right: -10px; }
+
+      .gallery-slide {
+        height: 380px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .stats-card-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== Pengaduan Section ===== */
+    #pengaduan {
+      background: var(--bg-white);
+      border-radius: 24px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .pengaduan-wrapper {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 36px;
+      align-items: stretch;
+    }
+
+    .pengaduan-info {
+      background: linear-gradient(160deg, var(--text-dark) 0%, #1e293b 100%);
+      color: #fff;
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pengaduan-info h3 {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+
+    .pengaduan-info p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .pengaduan-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 211, 102, 0.15);
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      color: #25D366;
+      padding: 8px 14px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      width: fit-content;
+      margin-bottom: 24px;
+    }
+
+    .pengaduan-contact {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.08);
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-top: auto;
+    }
+
+    .pengaduan-contact .icon-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .pengaduan-contact strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .pengaduan-contact span {
+      display: block;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .pengaduan-form {
+      background: var(--bg-white);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .form-group .req {
+      color: var(--primary);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-soft);
+      background: var(--bg-white);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .form-check input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .form-check label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .btn-submit-pengaduan {
+      width: 100%;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-submit-pengaduan:hover {
+      background: #1eb857;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pengaduan-note {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .pengaduan-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .form-row-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-blob blob-1"></div>
+
+  <!-- Header & Navigation -->
+  <header id="header">
+    <nav>
+      <a href="#beranda" class="logo">
+        <img src="smansa transparant.png" alt="Logo SMAN 1 Pangkep" class="logo-img">
+        <span>SMAN 1 Pangkajene <br> dan Kepulauan</span>
+      </a> 
+
+      <!-- Quick Live Visitor Badge di Header Nav -->
+      <div class="header-stats" title="Pengunjung Online Saat Ini">
+        <span class="live-dot"></span>
+        <span id="nav-online-count">18 Online</span>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#beranda" class="active">Beranda</a></li>
+        <li><a href="#profil">Profil</a></li>
+        <li><a href="#berita">Berita</a></li>
+        <li><a href="#guru">GTK</a></li>
+        <li><a href="#alumni">Alumni</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#unduhan">Unduh</a></li>
+        <li><a href="#pengaduan">Pengaduan</a></li>
+      </ul>
+
+      <a href="#kontak" class="btn-contact">Kontak kami </a>
+
+      <button class="mobile-toggle" id="menuBtn">
+        <i data-lucide="menu"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Jumbotron Slider -->
+  <section id="beranda" class="hero">
+    <div class="slider-container">
+      <div class="slide active">
+        <img src="APEL PAGI.JPG" alt="APEL PAGI">
+      </div>
+      <div class="slide">
+        <img src="sambut siwa.jpg" alt="SAMBUT SISWA">
+      </div>
+      <div class="slide">
+        <img src="FOTO GURU2.JPG" alt="FOTO GURU">
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-tag">
+        <i data-lucide="sparkles" style="width:14px; height:14px;"></i> Pusat Keunggulan Pendidikan Modern
+      </div>
+      <p class="hero-desc">Terwujudnya Generasi Unggul dalam Teknologi, Beriman dan bertakwa, Berdaya Saing Global serta Berbudaya Lingkungan.</p>
+    </div>
+
+    <div class="slider-dots" id="heroDots">
+      <div class="dot active" onclick="setSlide(0)"></div>
+      <div class="dot" onclick="setSlide(1)"></div>
+      <div class="dot" onclick="setSlide(2)"></div>
+    </div>
+  </section>
+
+  <!-- Section Widget Statistik Pengunjung -->
+  <div class="stats-section">
+    <div class="stats-card-container">
+      <div class="stat-box">
+        <div class="stat-icon">
+          <i data-lucide="activity"></i>
+        </div>
+        <div class="stat-info">
+          <h4>Aktif Sekarang</h4>
+          <p id="stat-online">18</p>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon">
+          <i data-lucide="user-check"></i>
+        </div>
+        <div class="stat-info">
+          <h4>Hari Ini</h4>
+          <p id="stat-today">245</p>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon">
+          <i data-lucide="users"></i>
+        </div>
+        <div class="stat-info">
+          <h4>Bulan Ini</h4>
+          <p id="stat-month">6,830</p>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon">
+          <i data-lucide="bar-chart-3"></i>
+        </div>
+        <div class="stat-info">
+          <h4>Total Kunjungan</h4>
+          <p id="stat-total">142,590</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profil Section -->
+  <section id="profil">
+    <div class="section-header">
+      <span class="section-subtitle">Profil Sekolah</span>
+      <h2 class="section-title">Fondasi Keunggulan Kami</h2>
+    </div>
+
+    <div class="profil-grid">
+      <div class="bright-card profil-card">
+        <div class="profil-icon"><i data-lucide="target"></i></div>
+        <h3>Visi Sekolah</h3>
+        <p>Terwujudnya murid yang Unggul dalam Teknologi, Berimtaq dan Berbudaya Lingkungan</p>
+      </div>
+
+      <div class="bright-card profil-card">
+        <div class="profil-icon"><i data-lucide="compass"></i></div>
+        <h3>Misi Sekolah</h3>
+        <ol style="padding-left: 18px; color: var(--text-muted); font-size: 0.9rem;">
+          <li>Meningkatkan penghayatan dan pengamalan terhadap ajaran agama dalam rangka membentuk murid yang beriman, bertakwa, dan berakhlak mulia melalui literasi al qur’an dan kegiatan ibadah lainnya.</li>
+          <li>Menerapkan semangat nasionalisme dalam pembelajaran dan pembiasaan.</li>
+          <li>Memanfaatkan teknologi informasi dan komunikasi dalam proses pembelajaran dan administrasi sekolah guna mendukung terciptanya sekolah modern yang adaptif terhadap perkembangan zaman.</li>
+          <li>Meningkatkan prestasi akademik dan non akademik murid serta target lulusan masuk Perguruan Tinggi Negeri (PTN) dan Perguruan Tinggi Swasta (PTS).</li>
+          <li>Melaksanakan pembelajaran dan bimbingan secara intensif, efektif, dan berkesinambungan dengan memanfaatkan potensi lingkungan sekitar, termasuk Geopark Maros Pangkep, sebagai sumber belajar.</li>
+          <li>Menerapkan pendidikan karakter melalui pembelajaran dan pembiasaan disekolah yang berbasis kearifan lokal dan nilai-nilai budaya yang hidup di masyarakat sekitar kawasan Geopark Maros Pangkep.</li>
+          <li>Meningkatkan kualitas lingkungan melalui upaya perlindungan, pelestarian, dan pengelolaan lingkungan hidup dalam pembelajaran dan praktek dengan menjadikan Geopark Maros-Pangkep sebagai laboratorium alam dalam menumbuhkan kesadaran ekologi murid.</li>
+        </ol>
+      </div>
+
+      <div class="bright-card profil-card">
+        <div class="profil-icon"><i data-lucide="award"></i></div>
+        <h3>Tujuan</h3>
+        <ol style="padding-left: 18px; color: var(--text-muted); font-size: 0.9rem;">
+          <li>Membentuk murid yang berkarakter religius.</li>
+          <li>Menghasilkan murid yang mampu membaca Al-Qur’an dan menghafal Juz 30.</li>
+          <li>Membentuk murid yang berkarakter kebangsaan dengan aktivitas sekolah seperti upacara dan apel, menyanyikan lagu Indonesia Raya setiap pukul 10.00 WITA, dan ikut memeriahkan hari-hari besar nasional.</li>
+          <li>Menghasilkan murid yang terampil dalam bidang teknologi.</li>
+          <li>Menghasilkan murid yang modern dan adaptif dalam dunia teknologi.</li>
+          <li>Menghasilkan murid yang berhasil dalam SNBP, SNBT, SPAN-PTKIN serta lulus pada seleksi tertulis masuk PTN dan PTS.</li>
+          <li>Menghasilkan murid juara dalam kegiatan yang dilaksanakan Pusat Prestasi Nasional (PUSPRESNAS) seperti Olimpiade Sains Nasional (OSN), debat Bahasa Indonesia dan Bahasa Inggris, kegiatan akademik dan non-akademik lainnya.</li>
+          <li>Membentuk karakter murid yang sadar lingkungan, disiplin yang menganut nilai-nilai budaya lokal.</li>
+          <li>Menghasilkan murid baru yang memiliki pemahaman tentang lingkungan sekolah yang mengintegrasikan materi Geopark Indonesia melalui kerja sama dengan Ikatan Keluarga Alumni (IKA) SMANSA, sebagai strategi pemanfaatan Geopark sebagai sarana edukasi masyarakat.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Berita Section -->
+  <section id="berita">
+    <div class="section-header">
+      <span class="section-subtitle">Seputar Kegiatan</span>
+      <h2 class="section-title">Berita & Pengumuman Terbaru</h2>
+    </div>
+
+    <div class="news-grid">
+      <div class="news-card">
+        <div class="news-img">
+          <span class="news-tag">Prestasi</span>
+          <img src="ahmad fakih.jpeg" alt="Olimpiade Olahraga Siswa Nasional">
+        </div>
+        <div class="news-body">
+          <div class="news-meta">
+            <div class="news-meta-item">
+              <i data-lucide="calendar" style="width:14px;"></i>
+              <span>12 Agustus 2026</span>
+            </div>
+            <div class="news-meta-item news-views">
+              <i data-lucide="eye" style="width:14px; color:var(--primary);"></i>
+              <span id="view-count-news-1">1,420</span> Dilihat
+            </div>
+          </div>
+          <h3 class="news-title">Ahmad Fakih siswa UPT SMAN 1 Pangkajene dan Kepulauan Lolos ke O2SN Tingkat Nasional</h3>
+          <p class="news-desc">Ahmad Fakih berhasil mengharumkan nama SMAN 1 Pangkajene dan Kepulauan dengan menjadi wakil pada ajang Olimpiade Olahraga Siswa Nasional (O2SN) tingkat nasional di cabang olahraga atletik nomor panca lomba..</p>
+          
+          <div class="news-full-content" id="news-1">
+            Prestasi yang berhasil diraih oleh Ahmad Faki diawali dengan berhasil mendapatkan juara 1 nomor panca lomba cabang olahraga atletik O2SN di tingkat kabupaten pangkep 2026, selanjutnya kembali mendapatkan juara 1 nomor panca lomba cabang olahraga atletik o2sn tingkat propinsi sulawesi Selatan dan berhak mewakili propinsi sulsel pada lomba cabang olahraga atletik O2SN ke tingkat Nasional.
+          </div>
+
+          <button class="news-btn-toggle" onclick="toggleNews('news-1', this)">
+            <span>Baca Selengkapnya</span> <i data-lucide="chevron-down" style="width:16px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-img">
+          <span class="news-tag">Kegiatan</span>
+          <img src="PAK ARLI PEMBINA APEL.JPG" alt="Apel Pagi">
+        </div>
+        <div class="news-body">
+          <div class="news-meta">
+            <div class="news-meta-item">
+              <i data-lucide="calendar" style="width:14px;"></i>
+              <span>05 Agustus 2026</span>
+            </div>
+            <div class="news-meta-item news-views">
+              <i data-lucide="eye" style="width:14px; color:var(--primary);"></i>
+              <span id="view-count-news-2">892</span> Dilihat
+            </div>
+          </div>
+          <h3 class="news-title">Kegiatan Apel Pagi yang diadakan setiap hari Rabu</h3>
+          <p class="news-desc">Bapak Arliady, S.Pd., M.Pd.,Gr. Bertindak sebagai pembina apel pagi menekankan tentang pentingnya disiplin waktu dan aturan serta tanggung jawab sebagai siswa terutama dalam menjaga kebersihan. </p>
+
+          <div class="news-full-content" id="news-2">
+            Jangan pernah menyepelakan apel pagi karena apel pagi adalah salah satu kegiatan yang sangat penting bagi siswa. apel pagi adalah kegiatan yang diadakan setiap hari Rabu yang bertujuan untuk menanamkan kedisiplinan dan tanggung jawab siswa. Kegiatan ini juga menjadi momen untuk menyampaikan informasi penting dari pihak sekolah kepada seluruh siswa.
+          </div>
+
+          <button class="news-btn-toggle" onclick="toggleNews('news-2', this)">
+            <span>Baca Selengkapnya</span> <i data-lucide="chevron-down" style="width:16px;"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="news-card">
+        <div class="news-img">
+          <span class="news-tag">Akademik</span>
+          <img src="penutupan.jpeg" alt="Penerimaan Siswa">
+        </div>
+        <div class="news-body">
+          <div class="news-meta">
+            <div class="news-meta-item">
+              <i data-lucide="calendar" style="width:14px;"></i>
+              <span>28 Juli 2026</span>
+            </div>
+            <div class="news-meta-item news-views">
+              <i data-lucide="eye" style="width:14px; color:var(--primary);"></i>
+              <span id="view-count-news-3">2,150</span> Dilihat
+            </div>
+          </div>
+          <h3 class="news-title">Penutupan Orientasi Siswa Baru Tahun Ajaran 2026/2027</h3>
+          <p class="news-desc">Masa Pengenalan Lingkungan Sekolah berjalan sukses dengan penekanan pada edukasi karakter. Dalam kegiatan penutupan, pihak sekolah menyampaikan apresiasi kepada seluruh panitia, guru, tenaga kependidikan, pengurus OSIS, serta seluruh pihak yang telah berkontribusi menyukseskan pelaksanaan orientasi.</p>
+
+          <div class="news-full-content" id="news-3">
+            Dalam kegiatan penutupan Kepala Cabang Dinas Wil IX  berharap seluruh siswa baru dapat menerapkan nilai-nilai yang telah diperoleh selama masa orientasi dalam kehidupan sehari-hari, baik di lingkungan sekolah maupun di tengah masyarakat. Semangat belajar, disiplin, kejujuran, tanggung jawab, dan kepedulian sosial diharapkan menjadi karakter yang terus tumbuh seiring perjalanan mereka sebagai pelajar.
+          </div>
+
+          <button class="news-btn-toggle" onclick="toggleNews('news-3', this)">
+            <span>Baca Selengkapnya</span> <i data-lucide="chevron-down" style="width:16px;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guru & Staf Section -->
+  <section id="guru">
+    <div class="section-header">
+      <span class="section-subtitle">Tenaga Pendidik</span>
+      <h2 class="section-title">Guru & Staf</h2>
+    </div>
+
+    <div class="slider-wrapper">
+      <button class="nav-arrow prev" onclick="moveSlide('guruTrack', -1)"><i data-lucide="chevron-left"></i></button>
+      
+      <div class="slider-viewport">
+        <div class="slider-track" id="guruTrack">
+          <!-- Card Guru -->
+        </div>
+      </div>
+
+      <button class="nav-arrow next" onclick="moveSlide('guruTrack', 1)"><i data-lucide="chevron-right"></i></button>
+    </div>
+    <div class="slider-counter" id="guruCounter">Menampilkan Guru & Staf</div>
+  </section>
+
+  <!-- Alumni Section -->
+  <section id="alumni">
+    <div class="section-header">
+      <span class="section-subtitle">Inspirasi Kelulusan</span>
+      <h2 class="section-title">Alumni 2026</h2>
+    </div>
+
+    <div class="alumni-badge-banner">
+      <h3 style="font-family:var(--font-heading); font-size: 1.4rem; margin-bottom: 6px; color: var(--primary);">
+        100% Kelulusan & sebanyak 40 alumni Diterima di PTN Favorit
+      </h3>
+      <p style="color:var(--text-muted); font-size: 0.9rem;">Selamat kepada Alumni Angkatan 2026 UPT SMAN 1 Pangkajene dan Kepulauan!</p>
+    </div>
+
+    <div class="slider-wrapper">
+      <button class="nav-arrow prev" onclick="moveSlide('alumniTrack', -1)"><i data-lucide="chevron-left"></i></button>
+      
+      <div class="slider-viewport">
+        <div class="slider-track" id="alumniTrack">
+          <!-- Card Alumni -->
+        </div>
+      </div>
+
+      <button class="nav-arrow next" onclick="moveSlide('alumniTrack', 1)"><i data-lucide="chevron-right"></i></button>
+    </div>
+    <div class="slider-counter" id="alumniCounter">Menampilkan Alumni</div>
+  </section>
+
+  <!-- Galeri Kegiatan Section dengan Filter Dropdown -->
+  <section id="galeri">
+    <div class="section-header">
+      <span class="section-subtitle">Dokumentasi Visual</span>
+      <h2 class="section-title">Galeri Kegiatan Sekolah</h2>
+    </div>
+
+    <!-- Dropdown Filter Galeri -->
+    <div class="gallery-filter-wrapper">
+      <label for="galleryFilter">Tampilkan Media:</label>
+      <select id="galleryFilter" class="gallery-filter-select" onchange="filterGallery(this.value)">
+        <option value="all">Semua Galeri (Foto & Video)</option>
+        <option value="foto">Foto Saja</option>
+        <option value="video">Video Saja</option>
+      </select>
+    </div>
+
+    
+    <div class="gallery-container">
+       <div class="gallery-track" id="galleryTrack">
+         <div class="gallery-slide" data-type="foto">
+          <img src="pembukaan itb.JPG" alt="Pembelajaran Mendalam KKA">
+          <div class="gallery-caption">
+            <h4>Program Pengadian Masyarakat ITB di SMAN 1 Pangkajene dan Kepulauan</h4>
+            <p>Pelatihan Implementasi Teknologi Content Delivery Network (CDN) Sebagai Akselerasi Digitalisasi Sekolah pada SMAN 1 Pangkajene dan Kepulauan oleh Institut Teknologi Bandung.</p>
+          </div>
+        </div>
+        <div class="gallery-slide" data-type="foto">
+          <img src="senamjasmani.JPG" alt="Senam Kesegaran Jasmani">
+          <div class="gallery-caption">
+            <h4>Giat Hari Jum'at SKJ 2026</h4>
+            <p>Untuk meningkatkan kebugaran, daya tahan jantung dan paru, serta kekuatan dan kelenturan otot.</p>
+          </div>
+        </div>
+        <div class="gallery-slide" data-type="foto">
+          <img src="kerjabakti.JPG" alt="Kerja Bakti">
+          <div class="gallery-caption">
+            <h4>Kerja Bakti</h4>
+            <p>Kegiatan kerja bakti yang dilakukan menciptakan lingkungan belajar yang bersih, sehat, dan nyaman, mencegah sarang penyakit seperti demam berdarah.</p>
+          </div>
+        </div>
+        <div class="gallery-slide" data-type="foto">
+          <img src="pmkka.jpeg" alt="Pembelajaran Mendalam KKA">
+          <div class="gallery-caption">
+            <h4>Pembukaan Kegiatan PM KKA di SMAN 1 Pangkajene dan Kepulauan</h4>
+            <p>Pelatihan Pembelajaran Mendalam Koding dan Kecerdasan Artifisial wilayah pelayanan BBGTK Provinsi Sulawesi Selatan.</p>
+          </div>
+        </div>
+       
+        
+        <!-- Video MP4 Lokal -->
+        <div class="gallery-slide" data-type="video">
+          <video controls poster="sambut siwa.jpg">
+            <source src="kegiatan_sekolah.mp4" type="video/mp4">
+            Browser Anda tidak mendukung pemutaran video.
+          </video>
+          <div class="gallery-caption">
+            <h4>Profil & Dokumentasi Kegiatan Sekolah</h4>
+            <p>Saksikan cuplikan keseruan berbagai kegiatan siswa dan momen bersejarah di UPT SMAN 1 Pangkajene dan Kepulauan.</p>
+          </div>
+        </div>
+
+        <!-- Video Reel Instagram Embed -->
+        <div class="gallery-slide" data-type="video">
+          <iframe src="https://www.instagram.com/reel/DcJQc7jzCEZ/embed" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no"></iframe>
+          <div class="gallery-caption">
+            <h4>Kegiatan Instagram Reels SMAN 1 Pangkep</h4>
+            <p>Tonton reel keseruan kegiatan sekolah langsung dari akun resmi Instagram SMAN 1 Pangkep.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery-nav">
+        <button class="gallery-btn" onclick="prevGallery()"><i data-lucide="chevron-left"></i></button>
+        <button class="gallery-btn" onclick="nextGallery()"><i data-lucide="chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Unduhan Section -->
+  <section id="unduhan">
+    <div class="section-header">
+      <span class="section-subtitle">Pusat Dokumen</span>
+      <h2 class="section-title">Unduhan & Berkas Sekolah</h2>
+    </div>
+
+    <div class="download-list">
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon">
+            <i data-lucide="file-text"></i>
+          </div>
+          <div>
+            <div class="download-title">Kalender Akademik 2026/2027</div>
+            <div class="download-meta">KALPEND GANJIL 2026-2027.pdf</div>
+          </div>
+        </div>
+        <a href="KALPEND GANJIL 2026-2027.pdf" download="KALPEND GANJIL 2026-2027.pdf" target="_blank" class="btn-download">
+          <i data-lucide="download" style="width:14px;"></i> Unduh
+        </a>
+      </div>
+    </div>
+
+    <div class="download-list">
+      <div class="download-item">
+        <div class="download-info">
+          <div class="download-icon">
+            <i data-lucide="file-text"></i>
+          </div>
+          <div>
+            <div class="download-title">Tata Tertib Siswa</div>
+            <div class="download-meta">TATIB SMANSA.pdf</div>
+          </div>
+        </div>
+        <a href="TATIB SMANSA.pdf" download="TATIB SMANSA.pdf" target="_blank" class="btn-download">
+          <i data-lucide="download" style="width:14px;"></i> Unduh
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pengaduan Online -->
+  <section id="pengaduan">
+    <div class="section-header">
+      <span class="section-subtitle">Layanan TPPK & BK</span>
+      <h2 class="section-title">Pengaduan Online</h2>
+    </div>
+
+    <div class="pengaduan-wrapper">
+      <div class="pengaduan-info">
+        <div>
+          <div class="pengaduan-badge">
+            <i data-lucide="shield-check" style="width:16px;"></i>
+            Rahasia & Terpercaya
+          </div>
+          <h3>Sampaikan Keluhan Anda</h3>
+          <p>
+            Layanan pengaduan ini dikelola oleh TPPK (Tim Pencegahan dan Penanganan
+            Kekerasan) dan Guru BK SMAN 1 Pangkajene dan Kepulauan. Setiap laporan yang
+            Anda kirim akan otomatis tersusun dan diteruskan langsung melalui WhatsApp
+            ke petugas terkait untuk segera ditindaklanjuti.
+          </p>
+        </div>
+
+        <div class="pengaduan-contact">
+          <div class="icon-circle">
+            <i data-lucide="message-circle" style="width:20px; color:#fff;"></i>
+          </div>
+          <div>
+            <strong>WhatsApp TPPK / BK</strong>
+            <span>0823-4525-9010</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pengaduan-form">
+        <form id="formPengaduan">
+          <div class="form-row-2">
+            <div class="form-group">
+              <label for="pgNama">Nama Pelapor <span class="req">*</span></label>
+              <input type="text" id="pgNama" placeholder="Nama lengkap" required>
+            </div>
+            <div class="form-group">
+              <label for="pgKelas">Kelas / Jabatan</label>
+              <input type="text" id="pgKelas" placeholder="Contoh: XI - 2 / Orang Tua Siswa">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="pgJenis">Jenis Pengaduan <span class="req">*</span></label>
+            <select id="pgJenis" required>
+              <option value="" disabled selected>Pilih jenis pengaduan</option>
+              <option value="Perundungan / Kekerasan (Bullying)">Perundungan / Kekerasan (Bullying)</option>
+              <option value="Akademik / Pembelajaran">Akademik / Pembelajaran</option>
+              <option value="Sarana & Prasarana">Sarana & Prasarana</option>
+              <option value="Pelayanan Administrasi">Pelayanan Administrasi</option>
+              <option value="Bimbingan Konseling (BK)">Bimbingan Konseling (BK)</option>
+              <option value="Lainnya">Lainnya</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="pgIsi">Isi Pengaduan <span class="req">*</span></label>
+            <textarea id="pgIsi" placeholder="Jelaskan kronologi atau isi pengaduan Anda secara detail..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="pgKontak">Nomor HP/WA Pelapor (agar dapat ditindaklanjuti)</label>
+            <input type="tel" id="pgKontak" placeholder="08xxxxxxxxxx">
+          </div>
+
+          <div class="form-check">
+            <input type="checkbox" id="pgAnonim">
+            <label for="pgAnonim">Kirim sebagai pengaduan anonim (nama tidak dicantumkan dalam pesan)</label>
+          </div>
+
+          <button type="submit" class="btn-submit-pengaduan">
+            <i data-lucide="send" style="width:18px;"></i>
+            Kirim Pengaduan via WhatsApp
+          </button>
+
+          <p class="pengaduan-note">
+            Tombol di atas akan membuka WhatsApp dengan pesan pengaduan yang sudah
+            terisi otomatis. Tekan tombol kirim di WhatsApp untuk menyelesaikan pengaduan.
+          </p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Modern & Terstruktur -->
+  <footer id="kontak">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <a href="#beranda" class="logo">
+          <img src="smansa transparant.png" alt="Logo SMAN 1 Pangkep" class="logo-img">
+          <span>SMAN 1 Pangkep</span>
+        </a>
+        <p>UPT SMAN 1 Pangkajene dan Kepulauan - Menciptakan masa depan pendidikan yang cemerlang, berdaya saing, dan berintegritas tinggi.</p>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-btn" title="Facebook">
+            <i data-lucide="facebook" style="width:18px;"></i>
+          </a>
+          <a href="https://instagram.com/smanegeri1pangkep_official" target="_blank" rel="noopener noreferrer" class="social-btn" title="Instagram">
+            <i data-lucide="instagram" style="width:18px;"></i>
+          </a>
+          <a href="mailto:sman1pangkep@gmail.com" class="social-btn" title="Surel">
+          <i data-lucide="mail" style="width:18px;"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Navigasi Cepat</h4>
+        <ul class="footer-links">
+          <li><a href="#beranda">Beranda</a></li>
+          <li><a href="#profil">Profil Sekolah</a></li>
+          <li><a href="#berita">Berita & Informasi</a></li>
+          <li><a href="#guru">Guru & Staf</a></li>
+          <li><a href="#alumni">Alumni</a></li>
+          <li><a href="#unduhan">Unduhan Dokumen</a></li>
+          <li><a href="#pengaduan">Pengaduan Online</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-title">Kontak Kami</h4>
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <i data-lucide="map-pin" style="width:16px;"></i>
+            </div>
+            <span>Jl. Andi Mauraga No.1, Pangkajene, Kab. Pangkajene dan Kepulauan, Sulawesi Selatan</span>
+          </div>
+
+          <a href="mailto:sman1pangkep@gmail.com" class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <i data-lucide="mail" style="width:16px;"></i>
+            </div>
+            <span>sman1pangkep@gmail.com</span>
+          </a>
+
+          <a href="https://instagram.com/smanegeri1pangkep_official" target="_blank" rel="noopener noreferrer" class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <i data-lucide="instagram" style="width:16px;"></i>
+            </div>
+            <span>@smanegeri1pangkep_official</span>
+          </a>
+
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <i data-lucide="facebook" style="width:16px;"></i>
+            </div>
+            <span>SMA Negeri 1 Pangkep</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 <br> UPT SMAN 1 Pangkajene  dan Kepulauan.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    lucide.createIcons();
+
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+
+    function setSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+    }
+
+    setInterval(() => {
+      let next = (currentSlide + 1) % slides.length;
+      setSlide(next);
+    }, 5000);
+
+    /* Simulasi Pengunjung Dinamis */
+    let onlineUsers = 18;
+    let todayViews = 245;
+    let totalViews = 142590;
+
+    setInterval(() => {
+      let delta = Math.floor(Math.random() * 5) - 2;
+      onlineUsers = Math.max(12, onlineUsers + delta);
+      document.getElementById('nav-online-count').textContent = `${onlineUsers} Online`;
+      document.getElementById('stat-online').textContent = onlineUsers;
+    }, 4000);
+
+    const newsViewed = { 'news-1': false, 'news-2': false, 'news-3': false };
+
+    function toggleNews(id, btn) {
+      const content = document.getElementById(id);
+      const span = btn.querySelector('span');
+      const viewElem = document.getElementById('view-count-' + id);
+
+      content.classList.toggle('open');
+
+      if (content.classList.contains('open')) {
+        span.textContent = 'Sembunyikan';
+        btn.style.color = '#64748B';
+
+        if (!newsViewed[id] && viewElem) {
+          let currentVal = parseInt(viewElem.textContent.replace(',', ''));
+          viewElem.textContent = (currentVal + 1).toLocaleString('id-ID');
+          newsViewed[id] = true;
+
+          todayViews++;
+          totalViews++;
+          document.getElementById('stat-today').textContent = todayViews.toLocaleString('id-ID');
+          document.getElementById('stat-total').textContent = totalViews.toLocaleString('id-ID');
+        }
+      } else {
+        span.textContent = 'Baca Selengkapnya';
+        btn.style.color = 'var(--primary)';
+      }
+    }
+
+    // =========================================================================
+    // DATA GURU & STAF
+    // =========================================================================
+    const dataGuru = [
+      { nama: "Syamsul Ardi, S.Pd., M.Pd", jabatan: "Kepala Sekolah", foto: "assets/img/1.jpg" },
+      { nama: "A. Lenny Rahim, S.Pd., M.Pd", jabatan: "Wakasek Kurikulum", foto: "assets/img/2.jpg" },
+      { nama: "Dra. Hj. Sunarti. AP, M.M., M.Pd", jabatan: "Wakasek Sarana", foto: "assets/img/3.jpg" },
+      { nama: "Agusalim, S.Pd., M.Pd", jabatan: "Wakasek Humas", foto: "assets/img/4.jpg" },
+      { nama: "Muhammad. Arif Yusuf, S.Pd. M.Pd.", jabatan: "Wakasek Kesiswaan", foto: "assets/img/5.jpg" },
+      { nama: "Hj. St. Maemuna, S.Pd.", jabatan: "Guru Kimia", foto: "assets/img/6.jpg" },
+      { nama: "Hj. Sri Sugiatmi, S.Pd.", jabatan: "Guru Pendidikan Pancasila", foto: "assets/img/7.jpg" },
+      { nama: "Hj. Dirham, S.Pd. M.M", jabatan: "Guru Fisika", foto: "assets/img/8.jpg" },
+      { nama: "Dra. Musriana, M.H", jabatan: "Guru Pendidikan Pancasila", foto: "assets/img/9.jpg" },
+      { nama: "Dra. Hj. Asma. M, M.M.", jabatan: "Geografi", foto: "assets/img/10.jpg" },
+      { nama: "Fatanuddin, M.Pd", jabatan: "Guru Informatika", foto: "assets/img/11.jpg" },
+      { nama: "Arifuddin, S.Pd., M.M", jabatan: "Guru Sejarah", foto: "assets/img/12.jpg" },
+      { nama: "Nurliah, S.Pd.", jabatan: "Guru Bahasa dan Sastra Indonesia", foto: "assets/img/13.jpg" },
+      { nama: "Hasmiah, S.Pd.", jabatan: "Guru Bahasa dan Sastra Indonesia", foto: "assets/img/14.jpg" },
+      { nama: "Nurhayati. HS, S.Pd.", jabatan: "Guru Biologi", foto: "assets/img/15.jpg" },
+      { nama: "Rosdiana, S.Pd., M.Pd", jabatan: "GuruBahasa Inggris", foto: "assets/img/16.jpg" },
+      { nama: "Satria, S.Pd., M.Pd", jabatan: "Guru Bahasa Inggris", foto: "assets/img/17.jpg" },
+      { nama: "Syamsiar, SS", jabatan: "Guru Bahasa Inggris", foto: "assets/img/18.jpg" },
+      { nama: "Kartini Baco Pole, S.Pd., M.Pd", jabatan: "Guru Penjaskes", foto: "assets/img/19.jpg" },
+      { nama: "Mukarrama Ismail, S.Pd., M.Pd", jabatan: "Guru Geografi", foto: "assets/img/20.jpg" },
+      { nama: "Hj. Nur Syamsuriati, S.Pd., M.Pd", jabatan: "Guru Biologi", foto: "assets/img/21.jpg" },
+      { nama: "Hj. Sitty Nurjanati, S.Pd.", jabatan: "Guru Ekonomi", foto: "assets/img/22.jpg" },
+      { nama: "Irmawaty, S.Pd.I", jabatan: "GuruPendidikan Agama Islam", foto: "assets/img/23.jpg" },
+      { nama: "Jumriah Kusnadi., S.Pd", jabatan: "Guru Bahasa dan Sastra Indonesia", foto: "assets/img/24.jpg" },
+      { nama: "Kasmawati, S.Pd.", jabatan: "Guru Matematika", foto: "assets/img/25.jpg" },
+      { nama: "Abdul Asis, S.Pd., M.Pd", jabatan: "Guru Fisika", foto: "assets/img/26.jpg" },
+      { nama: "Saharuddin, S.Ag", jabatan: "Guru Pendidikan Agama Islam", foto: "assets/img/27.jpg" },
+      { nama: "Andi Haerul Gali, S.Pd., M.Pd", jabatan: "Guru Bimbingan Konseling", foto: "assets/img/28.jpg" },
+      { nama: "Dra. Hj. Sarpiah, S.Pd., M.Pd", jabatan: "Guru Prakarya dan Kewirausahaan", foto: "assets/img/29.jpg" },
+      { nama: "H. Amiruddin.G, S.E.", jabatan: "Guru Penjaskes", foto: "assets/img/30.jpg" },
+      { nama: "Mustaman, S.Pd., M.Pd", jabatan: "Guru Matematika", foto: "assets/img/31.jpg" },
+      { nama: "Arliady, S.Pd. M.Pd.,Gr.", jabatan: "Guru Bimbingan Konseling", foto: "assets/img/32.jpg" },
+      { nama: "Hasanuddin, S.Pd., Gr.", jabatan: "Guru Sosiologi", foto: "assets/img/33.jpg" },
+      { nama: "Fitrawan Latief, S.Pd., Gr.", jabatan: "Guru Penjaskes", foto: "assets/img/34.jpg" },
+      { nama: "Aditya Angriawan, S.Pd.,Gr.", jabatan: "Guru Penjaskes", foto: "assets/img/35.jpg" },
+      { nama: "Anita Angriani, S.Pd, Gr", jabatan: "Guru Prakarya dan Keewirausahaan", foto: "assets/img/36.jpg" },
+      { nama: "Imran Arifin, S.Pd., Gr.", jabatan: "Guru Bimbingan Konseling", foto: "assets/img/37.jpg" },
+      { nama: "Syukri, S.T., M.Pd", jabatan: "Guru Prakarya dan Kewirausahaan", foto: "assets/img/38.jpg" },
+      { nama: "Zerasmita,S.S", jabatan: "Guru Sosiologi", foto: "assets/img/39.jpg" },
+      { nama: "Nasrul, S.Pd., M.Pd", jabatan: "Guru Informatika", foto: "assets/img/40.jpg" },
+      { nama: "Ike Nurjannah Rahman, S.Pd. Gr.", jabatan: "Guru Sosiologi", foto: "assets/img/41.jpg" },
+      { nama: "Desitasari, S.Pd.", jabatan: "Guru Bimbingan Konseling", foto: "assets/img/42.jpg" },
+      { nama: "Hj. Nur Jannah, S.Pd. Gr.", jabatan: "Guru Pendidikan Agama Islam", foto: "assets/img/43.jpg" },
+      { nama: "Muhammad Arham Saleh, S.Pd.I.Gr.", jabatan: "Guru Pendidikan Agama Islam", foto: "assets/img/44.jpg" },
+      { nama: "Irpan, S.Pd.Gr.", jabatan: "Guru Seni Budaya", foto: "assets/img/45.jpg" },
+      { nama: "Muhammad Farid wajdi,S.Pd., M.Pd.", jabatan: "Guru Matematika", foto: "assets/img/46.jpg" },
+      { nama: "Tasbih, S.Pd. Gr.", jabatan: "Guru Bimbingan Konseling", foto: "assets/img/47.jpg" },
+      { nama: "Hasnuni, S.Pd", jabatan: "Guru Bahasa dan Sastra Indonesia", foto: "assets/img/48.jpg" },
+      { nama: "Miftahul Jannah, S.Pd., Gr.", jabatan: "Guru Bahasa dan Sastra Indonesia ", foto: "assets/img/49.jpg" },
+      { nama: "Muhammad Arfang, S.Pd.", jabatan: "Guru Biologi", foto: "assets/img/50.jpg" },
+      { nama: "Anggita Astria Nur, S.Pd., M.Pd", jabatan: "Guru Matematika Peminatan", foto: "assets/img/51.jpg" },
+      { nama: "Mutamainnah, S.Pd.", jabatan: "Guru Sejarah", foto: "assets/img/52.jpg" },
+      { nama: "Ninik Suprianti Mandasary, S.Pd.", jabatan: "Guru Sejarah", foto: "assets/img/53.jpg" },
+      { nama: "Rahmatullah Mukminin, S.Pd.", jabatan: "Guru Seni Budaya", foto: "assets/img/54.jpg" },
+      { nama: "Umrah Rahman, S.Pd", jabatan: "Guru Bahasa Inggris", foto: "assets/img/55.jpg" },
+      { nama: "Firmansyah, S.Pd.", jabatan: "Guru Bimbingan Konseling", foto: "assets/img/56.jpg" },
+      { nama: "Annisa Nurul Rahmadani, S.Pd.", jabatan: "Guru", foto: "assets/img/57.jpg" },
+      { nama: "Uswatun Meutia fajri, S.Pd., M.Pd", jabatan: "Guru Matematika", foto: "assets/img/58.jpg" },
+      { nama: "Mutya Absari, S.Pd.", jabatan: "Guru Kimia", foto: "assets/img/59.jpg" },
+      { nama: "Olivia Rahman, S.Pd., Gr.", jabatan: "Guru ", foto: "assets/img/60.jpg" },
+      { nama: "Nur Halim., S.Pd", jabatan: "Guru Ekonomi", foto: "assets/img/61.jpg" },
+      { nama: "Rahmat, S.Pd.", jabatan: "Guru Matematika/Informatika", foto: "assets/img/62.jpg" },
+      { nama: "Paridah Khidayati, S.Pd., M.Pd", jabatan: "Guru Informatika", foto: "assets/img/63.jpg" },
+      { nama: "Alfina Harmadani Idris, S.Pd", jabatan: "Guru Fisika/Informatika", foto: "assets/img/64.jpg" },
+      { nama: "Nur Azira Azis, S.Pd., M.Pd", jabatan: "Guru Mulok", foto: "assets/img/65.jpg" },
+      { nama: "Aminuddin, S.Pd.", jabatan: "Guru Bahasa dan SastraIndonesia", foto: "assets/img/66.jpg" },
+      { nama: "Nurul Ainun Maudil Khawair, S.Pd.", jabatan: "Guru ", foto: "assets/img/67.jpg" },
+      { nama: "Munjiyah Dirga Ghazali, S.S., S.Pd.", jabatan: "Guru Mulok", foto: "assets/img/68.jpg" },
+      { nama: "Andi Fatimah, S.Pd.", jabatan: "Guru", foto: "assets/img/69.jpg" },
+      { nama: "Hamzah. HM, S.E.", jabatan: "Kepala Staf Tata Usaha", foto: "assets/img/70.jpg" },
+      { nama: "Hj. Risnawaty, S.E", jabatan: "Staf Tata Usaha", foto: "assets/img/71.jpg" },
+      { nama: "Nuraeni, S.E.", jabatan: "Staf Tata Usaha", foto: "assets/img/72.jpg" },
+      { nama: "Nur Ichwansyah", jabatan: "Staf Tata Usaha", foto: "assets/img/73.jpg" },
+      { nama: "Wahyudin, K, S.Sos", jabatan: "Staf Tata Usaha", foto: "assets/img/74.jpg" },
+      { nama: "Hasmini", jabatan: "Staf Tata Usaha", foto: "assets/img/75.jpg" },
+      { nama: "Suprihatin, S.E.", jabatan: "Staf Tata Usaha", foto: "assets/img/76.jpg" },
+      { nama: "Idawati", jabatan: "Staf Tata Usaha", foto: "assets/img/77.jpg" },
+      { nama: "Apriati Nur", jabatan: "Staf Tata Usaha", foto: "assets/img/78.jpg" },
+      { nama: "Suharti", jabatan: "Staf Tata Usaha", foto: "assets/img/79.jpg" },
+      { nama: "Hariati, S.E.", jabatan: "Staf Tata Usaha", foto: "assets/img/80.jpg" },
+      { nama: "Nurjuddin", jabatan: "Security", foto: "assets/img/81.jpg" },
+      { nama: "Muhammad Damil", jabatan: "Staf Kebersihan", foto: "assets/img/82.jpg" },
+      { nama: "Syamsiani", jabatan: "Staf Kebersihan", foto: "assets/img/83.jpg" },
+      { nama: "Usman", jabatan: "Staf Kebersihan", foto: "assets/img/84.jpg" },
+      { nama: "Imran", jabatan: "Staf Kebersihan", foto: "assets/img/85.jpg" },
+    ];
+
+    const guruTrack = document.getElementById('guruTrack');
+    let guruHTML = '';
+
+    dataGuru.forEach((guru) => {
+      guruHTML += `
+        <div class="bright-card guru-card">
+          <div class="guru-img-wrapper">
+            <img src="${guru.foto}" alt="${guru.nama}" class="guru-img" onerror="this.src='https://via.placeholder.com/150?text=Foto+Guru'">
+          </div>
+          <h3 class="guru-name">${guru.nama}</h3>
+          <p class="guru-role">${guru.jabatan}</p>
+        </div>
+      `;
+    });
+
+    if (guruTrack) {
+      guruTrack.innerHTML = guruHTML;
+      document.getElementById('guruCounter').textContent = `Menampilkan 1 - ${dataGuru.length} dari ${dataGuru.length} Guru & Staf`;
+    }
+
+    // =========================================================================
+    // DATA ALUMNI 2026
+    // =========================================================================
+    const dataAlumni = [
+      { nama: "Ahmad Asraf. Hs", kampus: "Universitas Indonesia", foto: "assets/img/siswa.jpg" },
+      { nama: "Andi Muhammad Fajrian", kampus: "Universitas Hasanuddin", foto: "assets/img/siswa.jpg" },
+      { nama: "Muhammad Fadil", kampus: "PNUP", foto: "assets/img/siswa.jpg" },
+      { nama: "Naura Khanza Fahira", kampus: "PNUP", foto: "assets/img/siswi.jpg" },
+      { nama: "ADHWA FADILAH", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Nur Syahra Damayanti", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Mahdalani Yuliandin", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Sariani.S", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Sri Mulia Nopianti", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Giran Seftiyanti", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Nur 'Aisyah", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Fadhil Muhammad", kampus: "Universitas Hasanuddin", foto: "assets/img/siswa.jpg" },
+      { nama: "Nur Alya Mukhbita Asmar", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Raihana Safika Amelia", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Nurul Mahdiah", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Nurhalisa", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Sri Khumaira.As", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Nurislamia Ali", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Gustav Aulia", kampus: "PNUP", foto: "assets/img/siswa.jpg" },
+      { nama: "Ayu Rahmadani", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Muh. Ghazaly Ramadhan", kampus: "Universitas Hasanuddin", foto: "assets/img/siswa.jpg" },
+      { nama: "Annisa Aulia", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "A. Khaerun Nisa Putri Mardhani", kampus: "PNUP", foto: "assets/img/siswi.jpg" },
+      { nama: "Nurhidayat", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswa.jpg" },
+      { nama: "Nur Fiana", kampus: "Politeknik Pertanian Negeri Pangkajene dan Kepulauan", foto: "assets/img/siswi.jpg" },
+      { nama: "Muhammad Rezki Syahruddin", kampus: "PNUP", foto: "assets/img/siswa.jpg" },
+      { nama: "Muhammad Rifai", kampus: "Universitas Hasanuddin", foto: "assets/img/siswa.jpg" },
+      { nama: "Muhammad Rasyad Gibran", kampus: "UIN Alauddin Makassar", foto: "assets/img/siswa.jpg" },
+      { nama: "Humairah Ramadhani", kampus: "PNUP", foto: "assets/img/siswi.jpg" },
+      { nama: "Butsainah Taqiyyah T.", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Kirana Putri Djulianti", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Muh. Athallah Putra Al Fathan", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswa.jpg" },
+      { nama: "Zakiyah Abbas Adam", kampus: "Universitas Hasanuddin", foto: "assets/img/siswi.jpg" },
+      { nama: "Nur Amalia", kampus: "Universitas Negeri Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Molidya Rahmat", kampus: "PNUP", foto: "assets/img/siswi.jpg" },
+      { nama: "Nur Asmirandah", kampus: "UIN Alauddin Makassar", foto: "assets/img/siswi.jpg" },
+      { nama: "Nur Qalbi Istiqamah", kampus: "IAIN Pare Pare", foto: "assets/img/siswi.jpg" },
+      { nama: "Miftahul Jannah", kampus: "UIN PALOPO", foto: "assets/img/siswi.jpg" },
+      { nama: "Sumarni", kampus: "UIN PALOPO", foto: "assets/img/siswi.jpg" },
+      { nama: "M. Zahwan Pratama", kampus: "UIN Alauddin Makassar", foto: "assets/img/siswa.jpg" }
+    ];
+
+    const alumniTrack = document.getElementById('alumniTrack');
+    let alumniHTML = '';
+
+    dataAlumni.forEach((alumni) => {
+      alumniHTML += `
+        <div class="alumni-card">
+          <img src="${alumni.foto}" alt="${alumni.nama}" class="alumni-img" onerror="this.src='https://via.placeholder.com/150?text=Foto+Alumni'">
+          <h4 class="alumni-name">${alumni.nama}</h4>
+          <p class="alumni-status">${alumni.kampus}</p>
+        </div>
+      `;
+    });
+
+    if (alumniTrack) {
+      alumniTrack.innerHTML = alumniHTML;
+      document.getElementById('alumniCounter').textContent = `Menampilkan 1 - ${dataAlumni.length} dari ${dataAlumni.length} Alumni`;
+    }
+
+    // Kontrol Slider Kartu Guru & Alumni
+    const sliderPositions = {
+      guruTrack: 0,
+      alumniTrack: 0
+    };
+
+    function moveSlide(trackId, direction) {
+      const track = document.getElementById(trackId);
+      const cards = track.children;
+      if (cards.length === 0) return;
+
+      const cardWidth = cards[0].offsetWidth + 20;
+      const viewportWidth = track.parentElement.offsetWidth;
+      const visibleCards = Math.floor(viewportWidth / cardWidth) || 1;
+      const maxIndex = Math.max(0, cards.length - visibleCards);
+
+      sliderPositions[trackId] += direction * visibleCards;
+
+      if (sliderPositions[trackId] < 0) sliderPositions[trackId] = 0;
+      if (sliderPositions[trackId] > maxIndex) sliderPositions[trackId] = maxIndex;
+
+      const translateX = sliderPositions[trackId] * cardWidth;
+      track.style.transform = `translateX(-${translateX}px)`;
+
+      const currentStart = sliderPositions[trackId] + 1;
+      const currentEnd = Math.min(sliderPositions[trackId] + visibleCards, cards.length);
+
+      if (trackId === 'guruTrack') {
+        document.getElementById('guruCounter').textContent = `Menampilkan ${currentStart} - ${currentEnd} dari ${cards.length} Guru & Staf`;
+      } else if (trackId === 'alumniTrack') {
+        document.getElementById('alumniCounter').textContent = `Menampilkan ${currentStart} - ${currentEnd} dari ${cards.length} Alumni`;
+      }
+    }
+
+    // Kontrol Galeri & Filter
+    const galleryTrack = document.getElementById('galleryTrack');
+    let visibleSlides = document.querySelectorAll('.gallery-slide');
+    let galleryIndex = 0;
+
+    function updateGallery() {
+      if (visibleSlides.length === 0) return;
+      galleryTrack.style.transform = `translateX(-${galleryIndex * 100}%)`;
+    }
+
+    function nextGallery() {
+      if (visibleSlides.length === 0) return;
+      galleryIndex = (galleryIndex + 1) % visibleSlides.length;
+      updateGallery();
+    }
+
+    function prevGallery() {
+      if (visibleSlides.length === 0) return;
+      galleryIndex = (galleryIndex - 1 + visibleSlides.length) % visibleSlides.length;
+      updateGallery();
+    }
+
+    function filterGallery(category) {
+      const allSlides = document.querySelectorAll('.gallery-slide');
+      
+      allSlides.forEach(slide => {
+        if (category === 'all' || slide.getAttribute('data-type') === category) {
+          slide.style.display = 'flex';
+        } else {
+          slide.style.display = 'none';
+        }
+      });
+
+      // Update daftar slide yang aktif
+      visibleSlides = document.querySelectorAll('.gallery-slide[style*="display: flex"], .gallery-slide:not([style*="display: none"])');
+      galleryIndex = 0;
+      updateGallery();
+    }
+
+    // Form Pengaduan Online via WhatsApp
+    (function () {
+      const NOMOR_TPPK_BK = "6282345259010";
+      const formPengaduan = document.getElementById('formPengaduan');
+
+      if (!formPengaduan) return;
+
+      formPengaduan.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const nama = document.getElementById('pgNama').value.trim();
+        const kelas = document.getElementById('pgKelas').value.trim();
+        const jenis = document.getElementById('pgJenis').value;
+        const isi = document.getElementById('pgIsi').value.trim();
+        const kontak = document.getElementById('pgKontak').value.trim();
+        const anonim = document.getElementById('pgAnonim').checked;
+
+        if (!nama || !jenis || !isi) {
+          alert('Mohon lengkapi Nama, Jenis Pengaduan, dan Isi Pengaduan terlebih dahulu.');
+          return;
+        }
+
+        const tanggal = new Date().toLocaleString('id-ID', {
+          dateStyle: 'full',
+          timeStyle: 'short'
+        });
+
+        let pesan = `*PENGADUAN ONLINE - SMAN 1 PANGKAJENE DAN KEPULAUAN*\n\n`;
+        pesan += `Waktu Laporan: ${tanggal}\n`;
+        pesan += `Nama Pelapor: ${anonim ? 'Anonim / Dirahasiakan' : nama}\n`;
+        if (!anonim && kelas) pesan += `Kelas/Jabatan: ${kelas}\n`;
+        pesan += `Jenis Pengaduan: ${jenis}\n`;
+        if (kontak) pesan += `Kontak Pelapor: ${kontak}\n`;
+        pesan += `\nIsi Pengaduan:\n${isi}\n`;
+        pesan += `\n_Pesan ini dikirim otomatis melalui formulir Pengaduan Online website sekolah._`;
+
+        const waUrl = `https://wa.me/${NOMOR_TPPK_BK}?text=${encodeURIComponent(pesan)}`;
+
+        window.open(waUrl, '_blank');
+
+        formPengaduan.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
