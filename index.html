@@ -399,6 +399,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
+      align-items: start;
     }
 
     .bright-card {
@@ -437,6 +438,39 @@
     .profil-card p {
       color: var(--text-muted);
       font-size: 0.9rem;
+    }
+
+    /* Collapsible / Baca Selengkapnya Profil */
+    .profil-more-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .profil-more-content.open {
+      max-height: 1000px;
+      opacity: 1;
+      margin-top: 6px;
+    }
+
+    .profil-btn-toggle {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      padding: 0;
+      margin-top: 14px;
+      transition: var(--transition);
+    }
+
+    .profil-btn-toggle:hover {
+      color: var(--primary-hover);
     }
 
     /* Berita Section */
@@ -1418,12 +1452,21 @@
         <ol style="padding-left: 18px; color: var(--text-muted); font-size: 0.9rem;">
           <li>Meningkatkan penghayatan dan pengamalan terhadap ajaran agama dalam rangka membentuk murid yang beriman, bertakwa, dan berakhlak mulia melalui literasi al qur’an dan kegiatan ibadah lainnya.</li>
           <li>Menerapkan semangat nasionalisme dalam pembelajaran dan pembiasaan.</li>
-          <li>Memanfaatkan teknologi informasi dan komunikasi dalam proses pembelajaran dan administrasi sekolah guna mendukung terciptanya sekolah modern yang adaptif terhadap perkembangan zaman.</li>
-          <li>Meningkatkan prestasi akademik dan non akademik murid serta target lulusan masuk Perguruan Tinggi Negeri (PTN) dan Perguruan Tinggi Swasta (PTS).</li>
-          <li>Melaksanakan pembelajaran dan bimbingan secara intensif, efektif, dan berkesinambungan dengan memanfaatkan potensi lingkungan sekitar, termasuk Geopark Maros Pangkep, sebagai sumber belajar.</li>
-          <li>Menerapkan pendidikan karakter melalui pembelajaran dan pembiasaan disekolah yang berbasis kearifan lokal dan nilai-nilai budaya yang hidup di masyarakat sekitar kawasan Geopark Maros Pangkep.</li>
-          <li>Meningkatkan kualitas lingkungan melalui upaya perlindungan, pelestarian, dan pengelolaan lingkungan hidup dalam pembelajaran dan praktek dengan menjadikan Geopark Maros-Pangkep sebagai laboratorium alam dalam menumbuhkan kesadaran ekologi murid.</li>
         </ol>
+
+        <div class="profil-more-content" id="misi-more">
+          <ol start="3" style="padding-left: 18px; color: var(--text-muted); font-size: 0.9rem;">
+            <li>Memanfaatkan teknologi informasi dan komunikasi dalam proses pembelajaran dan administrasi sekolah guna mendukung terciptanya sekolah modern yang adaptif terhadap perkembangan zaman.</li>
+            <li>Meningkatkan prestasi akademik dan non akademik murid serta target lulusan masuk Perguruan Tinggi Negeri (PTN) dan Perguruan Tinggi Swasta (PTS).</li>
+            <li>Melaksanakan pembelajaran dan bimbingan secara intensif, efektif, dan berkesinambungan dengan memanfaatkan potensi lingkungan sekitar, termasuk Geopark Maros Pangkep, sebagai sumber belajar.</li>
+            <li>Menerapkan pendidikan karakter melalui pembelajaran dan pembiasaan disekolah yang berbasis kearifan lokal dan nilai-nilai budaya yang hidup di masyarakat sekitar kawasan Geopark Maros Pangkep.</li>
+            <li>Meningkatkan kualitas lingkungan melalui upaya perlindungan, pelestarian, dan pengelolaan lingkungan hidup dalam pembelajaran dan praktek dengan menjadikan Geopark Maros-Pangkep sebagai laboratorium alam dalam menumbuhkan kesadaran ekologi murid.</li>
+          </ol>
+        </div>
+
+        <button class="profil-btn-toggle" onclick="toggleProfil('misi-more', this)">
+          <span>Baca Selengkapnya</span> <i data-lucide="chevron-down" style="width:16px;"></i>
+        </button>
       </div>
 
       <div class="bright-card profil-card">
@@ -1432,14 +1475,23 @@
         <ol style="padding-left: 18px; color: var(--text-muted); font-size: 0.9rem;">
           <li>Membentuk murid yang berkarakter religius.</li>
           <li>Menghasilkan murid yang mampu membaca Al-Qur’an dan menghafal Juz 30.</li>
-          <li>Membentuk murid yang berkarakter kebangsaan dengan aktivitas sekolah seperti upacara dan apel, menyanyikan lagu Indonesia Raya setiap pukul 10.00 WITA, dan ikut memeriahkan hari-hari besar nasional.</li>
-          <li>Menghasilkan murid yang terampil dalam bidang teknologi.</li>
-          <li>Menghasilkan murid yang modern dan adaptif dalam dunia teknologi.</li>
-          <li>Menghasilkan murid yang berhasil dalam SNBP, SNBT, SPAN-PTKIN serta lulus pada seleksi tertulis masuk PTN dan PTS.</li>
-          <li>Menghasilkan murid juara dalam kegiatan yang dilaksanakan Pusat Prestasi Nasional (PUSPRESNAS) seperti Olimpiade Sains Nasional (OSN), debat Bahasa Indonesia dan Bahasa Inggris, kegiatan akademik dan non-akademik lainnya.</li>
-          <li>Membentuk karakter murid yang sadar lingkungan, disiplin yang menganut nilai-nilai budaya lokal.</li>
-          <li>Menghasilkan murid baru yang memiliki pemahaman tentang lingkungan sekolah yang mengintegrasikan materi Geopark Indonesia melalui kerja sama dengan Ikatan Keluarga Alumni (IKA) SMANSA, sebagai strategi pemanfaatan Geopark sebagai sarana edukasi masyarakat.</li>
         </ol>
+
+        <div class="profil-more-content" id="tujuan-more">
+          <ol start="3" style="padding-left: 18px; color: var(--text-muted); font-size: 0.9rem;">
+            <li>Membentuk murid yang berkarakter kebangsaan dengan aktivitas sekolah seperti upacara dan apel, menyanyikan lagu Indonesia Raya setiap pukul 10.00 WITA, dan ikut memeriahkan hari-hari besar nasional.</li>
+            <li>Menghasilkan murid yang terampil dalam bidang teknologi.</li>
+            <li>Menghasilkan murid yang modern dan adaptif dalam dunia teknologi.</li>
+            <li>Menghasilkan murid yang berhasil dalam SNBP, SNBT, SPAN-PTKIN serta lulus pada seleksi tertulis masuk PTN dan PTS.</li>
+            <li>Menghasilkan murid juara dalam kegiatan yang dilaksanakan Pusat Prestasi Nasional (PUSPRESNAS) seperti Olimpiade Sains Nasional (OSN), debat Bahasa Indonesia dan Bahasa Inggris, kegiatan akademik dan non-akademik lainnya.</li>
+            <li>Membentuk karakter murid yang sadar lingkungan, disiplin yang menganut nilai-nilai budaya lokal.</li>
+            <li>Menghasilkan murid baru yang memiliki pemahaman tentang lingkungan sekolah yang mengintegrasikan materi Geopark Indonesia melalui kerja sama dengan Ikatan Keluarga Alumni (IKA) SMANSA, sebagai strategi pemanfaatan Geopark sebagai sarana edukasi masyarakat.</li>
+          </ol>
+        </div>
+
+        <button class="profil-btn-toggle" onclick="toggleProfil('tujuan-more', this)">
+          <span>Baca Selengkapnya</span> <i data-lucide="chevron-down" style="width:16px;"></i>
+        </button>
       </div>
     </div>
   </section>
@@ -1484,24 +1536,30 @@
       <div class="news-card">
         <div class="news-img">
           <span class="news-tag">Kegiatan</span>
-          <img src="PAK ARLI PEMBINA APEL.JPG" alt="Apel Pagi">
+          <img src="PEMATERI1.jpg" alt="Apel Pagi">
         </div>
         <div class="news-body">
           <div class="news-meta">
             <div class="news-meta-item">
               <i data-lucide="calendar" style="width:14px;"></i>
-              <span>05 Agustus 2026</span>
+              <span>27 Agustus 2026</span>
             </div>
             <div class="news-meta-item news-views">
               <i data-lucide="eye" style="width:14px; color:var(--primary);"></i>
               <span id="view-count-news-2">892</span> Dilihat
             </div>
           </div>
-          <h3 class="news-title">Kegiatan Apel Pagi yang diadakan setiap hari Rabu</h3>
-          <p class="news-desc">Bapak Arliady, S.Pd., M.Pd.,Gr. Bertindak sebagai pembina apel pagi menekankan tentang pentingnya disiplin waktu dan aturan serta tanggung jawab sebagai siswa terutama dalam menjaga kebersihan. </p>
+          <h3 class="news-title">Kegiatan Latihan dasar Kepemimpinan Siswa (LDKS)</h3>
+          <p class="news-desc">Bapak Iptu Suharman Taher, S.Pd. Membawakan materi LDKS, Dorong siswa untuk menjadi pemimpin yang berahlak dan berkarakter . </p>
 
           <div class="news-full-content" id="news-2">
-            Jangan pernah menyepelakan apel pagi karena apel pagi adalah salah satu kegiatan yang sangat penting bagi siswa. apel pagi adalah kegiatan yang diadakan setiap hari Rabu yang bertujuan untuk menanamkan kedisiplinan dan tanggung jawab siswa. Kegiatan ini juga menjadi momen untuk menyampaikan informasi penting dari pihak sekolah kepada seluruh siswa.
+            Dalam kegiatan tersebut, Iptu Suharman Tahir, S.Pd. hadir memberikan materi dengan tema “Transformasi Diri Menjadi Pemimpin yang Berakhlak dan Berkarakter.” </br> </br>
+
+Materi yang disampaikan menekankan pentingnya membangun karakter positif sejak dini, termasuk sikap disiplin, tanggung jawab, kepercayaan diri, kemampuan bekerja sama, serta kesiapan dalam menjalankan peran sebagai pemimpin maupun pengurus organisasi di lingkungan sekolah. </br> </br>
+
+Antusiasme peserta terlihat dalam sesi tanya jawab, di mana sejumlah siswa dan siswi aktif menyampaikan pertanyaan serta berdiskusi terkait materi kepemimpinan yang diberikan.
+
+Melalui kegiatan LDKS ini.
           </div>
 
           <button class="news-btn-toggle" onclick="toggleNews('news-2', this)">
@@ -1614,7 +1672,7 @@
           <img src="pembukaan itb.JPG" alt="Pembelajaran Mendalam KKA">
           <div class="gallery-caption">
             <h4>Program Pengadian Masyarakat ITB di SMAN 1 Pangkajene dan Kepulauan</h4>
-            <p>Pelatihan Implementasi Teknologi Content Delivery Network (CDN) Sebagai Akselerasi Digitalisasi Sekolah pada SMAN 1 Pangkajene dan Kepulauan oleh Institut Teknologi Bandung.</p>
+            <p>Pelatihan Implementasi Teknologi Content Delivery Network (CDN) Sebagai Akselerasi Digitalisasi Sekolah .</p>
           </div>
         </div>
         <div class="gallery-slide" data-type="foto">
@@ -1632,10 +1690,10 @@
           </div>
         </div>
         <div class="gallery-slide" data-type="foto">
-          <img src="pmkka.jpeg" alt="Pembelajaran Mendalam KKA">
+          <img src="ldk.JPG" alt="Pembelajaran Mendalam KKA">
           <div class="gallery-caption">
-            <h4>Pembukaan Kegiatan PM KKA di SMAN 1 Pangkajene dan Kepulauan</h4>
-            <p>Pelatihan Pembelajaran Mendalam Koding dan Kecerdasan Artifisial wilayah pelayanan BBGTK Provinsi Sulawesi Selatan.</p>
+            <h4>Kegiatan Latihan Dasar Kepemimpinan Siswa</h4>
+            <p>Untuk membentuk generasi muda yang memiliki jiwa kepemimpinan, disiplin, dan berkarakter.</p>
           </div>
         </div>
        
@@ -1929,6 +1987,22 @@
       document.getElementById('stat-online').textContent = onlineUsers;
     }, 4000);
 
+    /* Function Toggle Profil (Misi & Tujuan) */
+    function toggleProfil(id, btn) {
+      const content = document.getElementById(id);
+      const span = btn.querySelector('span');
+
+      content.classList.toggle('open');
+
+      if (content.classList.contains('open')) {
+        span.textContent = 'Sembunyikan';
+        btn.style.color = '#64748B';
+      } else {
+        span.textContent = 'Baca Selengkapnya';
+        btn.style.color = 'var(--primary)';
+      }
+    }
+
     const newsViewed = { 'news-1': false, 'news-2': false, 'news-3': false };
 
     function toggleNews(id, btn) {
@@ -2030,7 +2104,7 @@
       { nama: "Aminuddin, S.Pd.", jabatan: "Guru Bahasa dan SastraIndonesia", foto: "assets/img/66.jpg" },
       { nama: "Nurul Ainun Maudil Khawair, S.Pd.", jabatan: "Guru ", foto: "assets/img/67.jpg" },
       { nama: "Munjiyah Dirga Ghazali, S.S., S.Pd.", jabatan: "Guru Mulok", foto: "assets/img/68.jpg" },
-      { nama: "Andi Fatimah, S.Pd.", jabatan: "Guru", foto: "assets/img/69.jpg" },
+      { nama: "Andi Fatimah, S.Pd.", jabatan: "Guru ", foto: "assets/img/69.jpg" },
       { nama: "Hamzah. HM, S.E.", jabatan: "Kepala Staf Tata Usaha", foto: "assets/img/70.jpg" },
       { nama: "Hj. Risnawaty, S.E", jabatan: "Staf Tata Usaha", foto: "assets/img/71.jpg" },
       { nama: "Nuraeni, S.E.", jabatan: "Staf Tata Usaha", foto: "assets/img/72.jpg" },
@@ -2249,6 +2323,71 @@
         formPengaduan.reset();
       });
     })();
+  
   </script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  // Ganti dengan konfigurasi Firebase milik Anda
+  const firebaseConfig = {
+    apiKey: "https://sman1pangkep-web-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    authDomain: "sman1pangkep-web.firebaseapp.com",
+    databaseURL: "https://sman1pangkep-web-default-rtdb.firebaseio.com",
+    projectId: "sman1pangkep-web",
+    storageBucket: "sman1pangkep-web.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "1:123456789:web:abcdef"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // 1. PRESENCE SYSTEM (Menghitung Pengunjung Online Secara Realtime)
+  const myConnectionsRef = db.ref('online_users').push();
+  const connectedRef = db.ref('.info/connected');
+
+  connectedRef.on('value', (snap) => {
+    if (snap.val() === true) {
+      // Saat pengguna terhubung
+      myConnectionsRef.onDisconnect().remove();
+      myConnectionsRef.set(true);
+    }
+  });
+
+  // Listener Realtime Pengunjung Online
+  db.ref('online_users').on('value', (snap) => {
+    const count = snap.numChildren() || 1;
+    document.getElementById('stat-online').innerText = count;
+    document.getElementById('nav-online-count').innerText = `${count} Online`;
+  });
+
+  // 2. HIT COUNTER (Hari Ini, Bulan Ini, Total)
+  function trackVisitorStats() {
+    const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+    const monthStr = new Date().toISOString().slice(0, 7);  // YYYY-MM
+
+    // Increment Total
+    db.ref('stats/total').transaction(current => (current || 0) + 1);
+    // Increment Hari Ini
+    db.ref(`stats/daily/${todayStr}`).transaction(current => (current || 0) + 1);
+    // Increment Bulan Ini
+    db.ref(`stats/monthly/${monthStr}`).transaction(current => (current || 0) + 1);
+
+    // Sync Tampilan UI secara Realtime
+    db.ref('stats/total').on('value', snap => {
+      document.getElementById('stat-total').innerText = (snap.val() || 0).toLocaleString('id-ID');
+    });
+    db.ref(`stats/daily/${todayStr}`).on('value', snap => {
+      document.getElementById('stat-today').innerText = (snap.val() || 0).toLocaleString('id-ID');
+    });
+    db.ref(`stats/monthly/${monthStr}`).on('value', snap => {
+      document.getElementById('stat-month').innerText = (snap.val() || 0).toLocaleString('id-ID');
+    });
+  }
+
+  trackVisitorStats();
+</script>
 </body>
 </html>
