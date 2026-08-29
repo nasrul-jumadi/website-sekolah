@@ -1975,18 +1975,7 @@ Melalui kegiatan LDKS ini.
       setSlide(next);
     }, 5000);
 
-    /* Simulasi Pengunjung Dinamis */
-    let onlineUsers = 18;
-    let todayViews = 245;
-    let totalViews = 142590;
-
-    setInterval(() => {
-      let delta = Math.floor(Math.random() * 5) - 2;
-      onlineUsers = Math.max(12, onlineUsers + delta);
-      document.getElementById('nav-online-count').textContent = `${onlineUsers} Online`;
-      document.getElementById('stat-online').textContent = onlineUsers;
-    }, 4000);
-
+   
     /* Function Toggle Profil (Misi & Tujuan) */
     function toggleProfil(id, btn) {
       const content = document.getElementById(id);
@@ -2325,68 +2314,93 @@ Melalui kegiatan LDKS ini.
     })();
   
   </script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+ <!-- Firebase SDK Compatibility Version -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 
 <script>
-  // Ganti dengan konfigurasi Firebase milik Anda
+  // 1. Masukkan konfigurasi lengkap Firebase Console Anda di sini
   const firebaseConfig = {
-    apiKey: "https://sman1pangkep-web-default-rtdb.asia-southeast1.firebasedatabase.app/",
+    apiKey: "AIzaSyBXlYATeCUeX2cnAci-ToFB4M4gLn3Ydpc", 
     authDomain: "sman1pangkep-web.firebaseapp.com",
-    databaseURL: "https://sman1pangkep-web-default-rtdb.firebaseio.com",
+    databaseURL: "https://sman1pangkep-web-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "sman1pangkep-web",
     storageBucket: "sman1pangkep-web.appspot.com",
     messagingSenderId: "123456789",
     appId: "1:123456789:web:abcdef"
   };
 
-  // Initialize Firebase
+  // 2. Inisialisasi Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.database();
 
-  // 1. PRESENCE SYSTEM (Menghitung Pengunjung Online Secara Realtime)
-  const myConnectionsRef = db.ref('online_users').push();
+  // Format tanggal hari ini (YYYY-MM-DD) dan bulan ini (YYYY-MM)
+  const now = new Date();
+  const todayKey = now.toISOString().split('T')[0];
+  const monthKey = todayKey.substring(0, 7);
+
+  // Reference ke node database
+  const statsRef = db.ref('stats');
+  const onlineRef = db.ref('online_users');
   const connectedRef = db.ref('.info/connected');
 
+  // ------------------------------------------------------------------
+  // A. TRACKING PENGUNJUNG ONLINE (Realtime Presence)
+  // ------------------------------------------------------------------
   connectedRef.on('value', (snap) => {
     if (snap.val() === true) {
-      // Saat pengguna terhubung
-      myConnectionsRef.onDisconnect().remove();
-      myConnectionsRef.set(true);
+      // Tambahkan user saat konek
+      const userRef = onlineRef.push();
+      
+      // Hapus otomatis dari DB saat user menutup/melepaskan koneksi tab browser
+      userRef.onDisconnect().remove();
+      userRef.set(true);
     }
   });
 
-  // Listener Realtime Pengunjung Online
-  db.ref('online_users').on('value', (snap) => {
-    const count = snap.numChildren() || 1;
-    document.getElementById('stat-online').innerText = count;
-    document.getElementById('nav-online-count').innerText = `${count} Online`;
+  // Listener perubahan pengguna online secara real-time
+  onlineRef.on('value', (snap) => {
+    const count = snap.numChildren();
+    
+    // Update tampilan UI
+    document.getElementById('stat-online').textContent = count;
+    document.getElementById('nav-online-count').textContent = `${count} Online`;
   });
 
-  // 2. HIT COUNTER (Hari Ini, Bulan Ini, Total)
-  function trackVisitorStats() {
-    const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-    const monthStr = new Date().toISOString().slice(0, 7);  // YYYY-MM
-
-    // Increment Total
-    db.ref('stats/total').transaction(current => (current || 0) + 1);
-    // Increment Hari Ini
-    db.ref(`stats/daily/${todayStr}`).transaction(current => (current || 0) + 1);
-    // Increment Bulan Ini
-    db.ref(`stats/monthly/${monthStr}`).transaction(current => (current || 0) + 1);
-
-    // Sync Tampilan UI secara Realtime
-    db.ref('stats/total').on('value', snap => {
-      document.getElementById('stat-total').innerText = (snap.val() || 0).toLocaleString('id-ID');
-    });
-    db.ref(`stats/daily/${todayStr}`).on('value', snap => {
-      document.getElementById('stat-today').innerText = (snap.val() || 0).toLocaleString('id-ID');
-    });
-    db.ref(`stats/monthly/${monthStr}`).on('value', snap => {
-      document.getElementById('stat-month').innerText = (snap.val() || 0).toLocaleString('id-ID');
-    });
+  // ------------------------------------------------------------------
+  // B. TRACKING KUNJUNGAN (Total, Bulan Ini, Hari Ini)
+  // ------------------------------------------------------------------
+  function trackVisit() {
+    // Jalankan increment atomik agar data akurat saat diakses bersamaan
+    statsRef.child('total').transaction((curr) => (curr || 0) + 1);
+    statsRef.child(`monthly/${monthKey}`).transaction((curr) => (curr || 0) + 1);
+    statsRef.child(`daily/${todayKey}`).transaction((curr) => (curr || 0) + 1);
   }
 
+  // Panggil fungsi penambahan kunjungan sekali tiap kali halaman dimuat
+  trackVisit();
+
+  // ------------------------------------------------------------------
+  // C. LISTENER REALTIME UNTUK JUMLAH STATISTIK KUNJUNGAN
+  // ------------------------------------------------------------------
+  // 1. Total Kunjungan
+  statsRef.child('total').on('value', (snap) => {
+    const val = snap.val() || 0;
+    document.getElementById('stat-total').textContent = val.toLocaleString('id-ID');
+  });
+
+  // 2. Kunjungan Bulan Ini
+  statsRef.child(`monthly/${monthKey}`).on('value', (snap) => {
+    const val = snap.val() || 0;
+    document.getElementById('stat-month').textContent = val.toLocaleString('id-ID');
+  });
+
+  // 3. Kunjungan Hari Ini
+  statsRef.child(`daily/${todayKey}`).on('value', (snap) => {
+    const val = snap.val() || 0;
+    document.getElementById('stat-today').textContent = val.toLocaleString('id-ID');
+  });
+</script>
   trackVisitorStats();
 </script>
 </body>
