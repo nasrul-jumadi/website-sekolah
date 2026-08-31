@@ -2362,6 +2362,12 @@ Melalui kegiatan LDKS ini.
 
       var GC_BASE = 'https://' + GC_CODE + '.goatcounter.com';
 
+      // PENTING (wajib dilakukan sekali di dashboard GoatCounter agar angka tidak selalu 0):
+      // Login ke GC_BASE di atas -> menu Settings -> aktifkan opsi
+      // "Enable to make pageview counts on this page publicly visible" (Allow Counter).
+      // Tanpa opsi ini aktif, endpoint /counter/*.json tetap membalas "sukses" tapi
+      // datanya kosong, sehingga skrip lama menampilkan 0 tanpa pernah memunculkan error.
+
       function pad(n) { return n < 10 ? '0' + n : '' + n; }
       var now = new Date();
       var dayKey = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
@@ -2372,12 +2378,18 @@ Melalui kegiatan LDKS ini.
       s.async = true;
       s.src = '//gc.zgo.at/count.js';
       s.setAttribute('data-goatcounter', GC_BASE + '/count');
+      s.onerror = function () {
+        console.error('[Statistik Pengunjung] Gagal memuat count.js dari gc.zgo.at. Cek koneksi internet / pemblokir iklan (AdBlock) yang mungkin memblokir domain goatcounter.');
+      };
       document.head.appendChild(s);
 
       // Catat juga "jejak" kunjungan harian & bulanan sebagai event terpisah,
       // supaya bisa dihitung ulang per hari / per bulan lewat endpoint publik.
       function pingEvent(path, title) {
         var img = new Image();
+        img.onerror = function () {
+          console.error('[Statistik Pengunjung] Ping event gagal untuk path: ' + path);
+        };
         img.src = GC_BASE + '/count?p=' + encodeURIComponent(path) +
                   '&t=' + encodeURIComponent(title) + '&e=true';
       }
@@ -2394,25 +2406,60 @@ Melalui kegiatan LDKS ini.
         return n.toLocaleString('id-ID');
       }
 
-      // Ambil angka statistik ASLI dari endpoint publik GoatCounter (tanpa API key)
+      // Ambil angka statistik ASLI dari endpoint publik GoatCounter (tanpa API key).
+      // Berbeda dari versi sebelumnya: sekarang kita cek status HTTP dan isi respons,
+      // lalu log ke console kalau ada masalah, alih-alih diam-diam menampilkan 0.
       function fetchCounter(path) {
         var url = GC_BASE + '/counter/' + encodeURIComponent(path) + '.json';
-        return fetch(url).then(function (r) { return r.json(); }).catch(function () { return null; });
+        return fetch(url)
+          .then(function (r) {
+            if (!r.ok) {
+              console.error('[Statistik Pengunjung] HTTP ' + r.status + ' untuk ' + url +
+                '. Kemungkinan besar opsi "Allow Counter/Public" belum diaktifkan di Settings GoatCounter, atau Site Code salah.');
+              return null;
+            }
+            return r.json();
+          })
+          .then(function (d) {
+            if (!d || typeof d.count === 'undefined') {
+              console.error('[Statistik Pengunjung] Respons tidak berisi data count untuk ' + url + '. Data:', d);
+              return null;
+            }
+            return d;
+          })
+          .catch(function (err) {
+            console.error('[Statistik Pengunjung] Gagal mengambil ' + url + ':', err);
+            return null;
+          });
+      }
+
+      var hadAnyError = false;
+
+      function markUnavailable(ids) {
+        hadAnyError = true;
+        ids.forEach(function (id) { setText(id, 'Cek pengaturan'); });
       }
 
       function updateStats() {
         fetchCounter('/stat-harian/' + dayKey).then(function (d) {
-          if (!d) return;
+          if (!d) { markUnavailable(['stat-today', 'stat-online', 'nav-online-count']); return; }
           setText('stat-today', fmt(d.count));
           setText('stat-online', fmt(d.count_unique));
           setText('nav-online-count', fmt(d.count_unique) + ' Pengunjung Hari Ini');
         });
         fetchCounter('/stat-bulanan/' + monthKey).then(function (d) {
-          if (d) setText('stat-month', fmt(d.count));
+          if (!d) { markUnavailable(['stat-month']); return; }
+          setText('stat-month', fmt(d.count));
         });
         fetchCounter('/').then(function (d) {
-          if (d) setText('stat-total', fmt(d.count));
+          if (!d) { markUnavailable(['stat-total']); return; }
+          setText('stat-total', fmt(d.count));
         });
+
+        if (hadAnyError) {
+          console.warn('[Statistik Pengunjung] Ada data yang gagal dimuat. Buka ' + GC_BASE +
+            ' -> Settings -> aktifkan "Enable to make pageview counts on this page publicly visible", lalu tunggu 1-2 menit dan reload halaman ini.');
+        }
       }
 
       // Beri jeda sedikit agar kunjungan saat ini sempat tercatat, lalu perbarui
